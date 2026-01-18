@@ -41,7 +41,7 @@ const DashboardPage = async ({ searchParams }: DashboardPageProps) => {
     ]);
   const totalPages = Math.max(1, Math.ceil(movementTotal / pageSize));
 
-  const inventoryValue = products.reduce((acc, item) => {
+  const inventoryValue = products.reduce((acc: number, item) => {
     const cost = Number(item.costPrice);
     return acc + item.currentStock * cost;
   }, 0);
