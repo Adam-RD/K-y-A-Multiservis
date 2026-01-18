@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f1e8;
+  --foreground: #1f2937;
+  --surface: #ffffff;
+  --surface-warm: #fff7ed;
+  --border: #eadfcd;
+  --brand: #0f766e;
+  --brand-strong: #0b5d57;
+  --accent: #f59e0b;
+  --app-sidebar-bg: rgba(219, 234, 254, 0.9);
+  --app-sidebar-border: #93c5fd;
+  --app-main-bg: rgba(255, 255, 255, 0.6);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-fira-code);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(
+      1200px circle at 8% 12%,
+      rgba(255, 241, 230, 0.85) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      1000px circle at 92% 0%,
+      rgba(233, 251, 245, 0.8) 0%,
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(246, 241, 232, 0.95) 0%,
+      rgba(253, 251, 247, 0.92) 45%,
+      rgba(238, 251, 247, 0.92) 100%
+    );
+  background-repeat: no-repeat;
+  background-position: 8% 12%, 92% 0%, 0 0;
+  background-size: auto, auto, auto;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  position: relative;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/K%20y%20A%20Multiservis%20version%20black.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+:root[data-theme="ocean"] {
+  --app-sidebar-bg: rgba(191, 219, 254, 0.95);
+  --app-sidebar-border: #60a5fa;
+  --app-main-bg: rgba(219, 234, 254, 0.75);
+}
+
+:root[data-theme="sand"] {
+  --app-sidebar-bg: rgba(254, 215, 170, 0.95);
+  --app-sidebar-border: #f59e0b;
+  --app-main-bg: rgba(254, 230, 170, 0.75);
+}
+
+:root[data-theme="slate"] {
+  --app-sidebar-bg: rgba(203, 213, 225, 0.95);
+  --app-sidebar-border: #64748b;
+  --app-main-bg: rgba(226, 232, 240, 0.8);
+}
+
+:root[data-theme="forest"] {
+  --app-sidebar-bg: rgba(187, 247, 208, 0.95);
+  --app-sidebar-border: #22c55e;
+  --app-main-bg: rgba(220, 252, 231, 0.8);
+}
+
+:root[data-theme="sunset"] {
+  --app-sidebar-bg: rgba(253, 186, 175, 0.95);
+  --app-sidebar-border: #f43f5e;
+  --app-main-bg: rgba(254, 205, 211, 0.8);
+}
+
+:root[data-theme="graphite"] {
+  --app-sidebar-bg: rgba(148, 163, 184, 0.92);
+  --app-sidebar-border: #334155;
+  --app-main-bg: rgba(203, 213, 225, 0.8);
+}
+
+@layer utilities {
+  .bg-card {
+    background: var(--surface);
+  }
+
+  .bg-card-warm {
+    background: var(--surface-warm);
+  }
+
+  .border-app {
+    border-color: var(--border);
+  }
+
+  .shadow-soft {
+    box-shadow: 0 12px 26px rgba(15, 118, 110, 0.12);
+  }
+
+  .animate-rise {
+    animation: rise 420ms ease-out both;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
