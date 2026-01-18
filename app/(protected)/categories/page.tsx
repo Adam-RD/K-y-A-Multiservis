@@ -26,10 +26,12 @@ const CategoriesPage = async ({ searchParams }: CategoriesPageProps) => {
         </p>
       </div>
       <CategoryManager
-        categories={categoriesResult.items.map((category) => ({
-          id: category.id,
-          name: category.name,
-        }))}
+        categories={categoriesResult.items.map(
+          (category: { id: string; name: string }) => ({
+            id: category.id,
+            name: category.name,
+          })
+        )}
         totalItems={categoriesResult.total}
         page={currentPage}
         totalPages={totalPages}

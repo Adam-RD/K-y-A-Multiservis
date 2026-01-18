@@ -31,6 +31,7 @@ export const UserManager = ({
 }: UserManagerProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [showCreatePassword, setShowCreatePassword] = useState(false);
 
   const handleCreate = (formData: FormData) => {
     setError(null);
@@ -85,18 +86,21 @@ export const UserManager = ({
         <input
           name="username"
           placeholder="Nuevo usuario"
+          autoComplete="off"
           className="rounded-lg border border-app px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100"
         />
         <input
           name="password"
-          type="password"
+          type={showCreatePassword ? "text" : "password"}
           placeholder="Contraseña"
+          autoComplete="new-password"
           className="rounded-lg border border-app px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100"
         />
         <input
           name="confirmPassword"
-          type="password"
+          type={showCreatePassword ? "text" : "password"}
           placeholder="Confirmar"
+          autoComplete="new-password"
           className="rounded-lg border border-app px-3 py-2 text-sm focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100"
         />
         <button
@@ -105,6 +109,13 @@ export const UserManager = ({
           className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-700"
         >
           Crear
+        </button>
+        <button
+          type="button"
+          onClick={() => setShowCreatePassword((current) => !current)}
+          className="rounded-lg border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 md:col-span-4 md:justify-self-start"
+        >
+          {showCreatePassword ? "Ocultar contrasena" : "Ver contrasena"}
         </button>
       </form>
       {error ? (

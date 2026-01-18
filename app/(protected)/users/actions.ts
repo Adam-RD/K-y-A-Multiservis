@@ -75,6 +75,15 @@ export const deleteUserAction = async (
   if (total <= 1) {
     return { error: "Debe existir al menos un usuario." };
   }
+  const movementCount = await prisma.stockMovement.count({
+    where: { userId: id },
+  });
+  if (movementCount > 0) {
+    return {
+      error:
+        "No puedes borrar este usuario porque tiene movimientos registrados.",
+    };
+  }
   await deleteUser(id);
   revalidatePath("/users");
   return {};
