@@ -22,6 +22,7 @@ export default function Home() {
     };
     redirect();
   }, [router]);
+  
 
   return null;
 }
