@@ -15,16 +15,28 @@ export const ProductDeleteButton = ({ id }: ProductDeleteButtonProps) => {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {
-    startTransition(async () => {
-      try {
-        await deleteProductAction(id);
-        toast.success("Producto eliminado.");
-        router.refresh();
-      } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Error al eliminar producto.";
-        toast.error(message);
-      }
+    toast("¿Eliminar producto?", {
+      description:
+        "Se borrarán también los movimientos asociados. Esta acción no se puede deshacer.",
+      cancel: {
+        label: "Cancelar",
+        onClick: () => {},
+      },
+      action: {
+        label: "Eliminar",
+        onClick: () => {
+          startTransition(async () => {
+            const result = await deleteProductAction(id);
+            if (result?.error) {
+              toast.error(result.error);
+              return;
+            }
+            toast.success("Producto eliminado.");
+            router.refresh();
+          });
+        },
+      },
+      duration: 8000,
     });
   };
 

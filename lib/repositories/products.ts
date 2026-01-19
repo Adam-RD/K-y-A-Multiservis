@@ -77,5 +77,8 @@ export const updateProduct = async (
 };
 
 export const deleteProduct = async (id: string): Promise<void> => {
-  await prisma.product.delete({ where: { id } });
+  await prisma.$transaction(async (tx) => {
+    await tx.stockMovement.deleteMany({ where: { productId: id } });
+    await tx.product.delete({ where: { id } });
+  });
 };

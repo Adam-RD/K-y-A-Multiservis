@@ -77,7 +77,15 @@ export const updateProductAction = async (
 
 export const deleteProductAction = async (
   id: string
-): Promise<void> => {
-  await deleteProduct(id);
+): Promise<ActionResult> => {
+  try {
+    await deleteProduct(id);
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+    return { error: "Error al eliminar producto." };
+  }
   revalidatePath("/products");
+  return {};
 };
