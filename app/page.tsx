@@ -1,12 +1,23 @@
-import { getSessionUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function Home() {
-  const user = await getSessionUser();
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-  if (user) {
-    redirect("/inventory"); 
-  }
+export default function Home() {
+  const router = useRouter();
 
-  redirect("/login");
+  useEffect(() => {
+    const redirect = async () => {
+      try {
+        const response = await fetch("/api/session", { cache: "no-store" });
+        const data = (await response.json()) as { authenticated?: boolean };
+        router.replace(data.authenticated ? "/dashboard" : "/login");
+      } catch {
+        router.replace("/login");
+      }
+    };
+    redirect();
+  }, [router]);
+
+  return null;
 }
